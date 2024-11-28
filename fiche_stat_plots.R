@@ -13,6 +13,14 @@ knn_predict <- function(x_train, y_train, x_test, k) {
     mean(y_train[neighbors])
   })
 }
+par(mfrow = c(2, 2))
+k_values_exemple=c(1,3,10,49)
+for (k in k_values_exemple) {
+  x_sorted<-sort(x)
+  predictions <- knn_predict(x, y_sampled, x_sorted, k)
+  plot(x, y, main = paste("k =", k), xlab = "maxO3v", ylab = "maxO3", pch = 1, col = "blue")
+  lines(x_sorted, predictions, col = "orange", lwd = 2)
+}
 
 
 
@@ -47,7 +55,7 @@ for (k in k_values) {
   Biais[k] <- mean((predictions - y)^2)
   var[k] <- mean(var(predictions))
 }
-
+par(mfrow = c(1,1))
 #Cross-validation pour k_optimal
 plot(k_values,RMSE,xlab = "Nombe de plus proches voisins k",ylab=expression(hat(R)(k)))
 lines(k_values,RMSE)
